@@ -22,7 +22,7 @@ const Blog = sequelize.define("Blog", {
     allowNull: false,
   },
   author: {
-    type: DataTypes.STRING(1000),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   tags: {
