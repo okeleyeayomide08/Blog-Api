@@ -3,6 +3,9 @@ import express from "express";
 import { successMessage } from "./utils/apiResponse.js";
 import { connectDB } from "./config/database.js";
 
+// Importing Model
+import { Blog } from "./models/Blog.js";
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
