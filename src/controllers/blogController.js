@@ -49,7 +49,7 @@ const createBlog = async (req, res, next) => {
 
 const getAllBlogs = async (req, res, next) => {
   try {
-    const { status, page, limit } = req.query;
+    const { status, page, limit, search, author, tag } = req.query;
 
     const pageNumber = parseInt(page) || 1;
     const pageSize = parseInt(limit) || 10;
@@ -61,6 +61,17 @@ const getAllBlogs = async (req, res, next) => {
       where.status = status;
     }
 
+    if (search) {
+      where.title = { [Op.like]: `%${search}%` };
+    }
+
+    if (author) {
+      where.author = author;
+    }
+
+    if (tag) {
+      where.tags = { [Op.like]: `%${tag}%` };
+    }
     const { rows, count } = await Blog.findAndCountAll({
       where,
       limit: pageSize,
