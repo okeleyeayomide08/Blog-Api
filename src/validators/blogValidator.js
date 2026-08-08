@@ -29,12 +29,19 @@ const updateBlogValidation = [
     .optional()
     .trim()
     .notEmpty()
+    .withMessage("Title is required")
     .isLength({ max: 255 })
     .withMessage("Title can only have a maximum of 255 characters"),
-  body("content").optional(),
-  body("author")
+  body("content")
+    .optional()
     .trim()
     .notEmpty()
+    .withMessage("Content is required"),
+  body("author")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Author is required")
     .isLength({ max: 100 })
     .withMessage("Author can only have a maximum of 100 characters"),
   body("tags")
