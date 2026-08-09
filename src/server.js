@@ -5,7 +5,7 @@ import { connectDB } from "./config/database.js";
 import {
   createBlog,
   getAllBlogs,
-  getBlogById,
+  getBlog,
   updateBlog,
   deleteBlog,
 } from "./controllers/blogController.js";
@@ -13,7 +13,7 @@ import {
   createBlogValidation,
   updateBlogValidation,
 } from "./validators/blogValidator.js";
-import { blogRoute } from "./routes/blogRoutes.js";
+import blogRoute from "./routes/blogRoutes.js";
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/blogs", createBlogValidation, createBlog);
 app.get("/api/blogs", getAllBlogs);
-app.get("/api/blogs/:id", getBlogById);
+app.get("/api/blogs/:id", getBlog);
 app.put("/api/blogs/:id", updateBlogValidation, updateBlog);
 app.delete("/api/blogs/:id", deleteBlog);
 

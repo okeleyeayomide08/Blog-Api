@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import { Blog } from "../models/Blog.js";
 import { generateSlug } from "../utils/slug.js";
 import { successMessage, errorMessage } from "../utils/apiResponse.js";
-import { where, Op } from "sequelize";
+import { Op, fn, col, where as sqlWhere } from "sequelize";
 
 const createBlog = async (req, res, next) => {
   try {
@@ -56,6 +56,7 @@ const getAllBlogs = async (req, res, next) => {
     const offset = (pageNumber - 1) * pageSize;
 
     const where = {};
+    const andConditions = [];
 
     if (status) {
       where.status = status;
@@ -70,8 +71,15 @@ const getAllBlogs = async (req, res, next) => {
     }
 
     if (tag) {
-      where.tags = { [Op.like]: `%${tag}%` };
+      andConditions.push(
+        sqlWhere(fn("JSON_CONTAINS", col("tags"), JSON.stringify(tag)), 1),
+      );
     }
+
+    if (andConditions.length > 0) {
+      where[Op.and] = andConditions;
+    }
+
     const { rows, count } = await Blog.findAndCountAll({
       where,
       limit: pageSize,
