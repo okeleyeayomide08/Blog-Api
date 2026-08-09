@@ -119,7 +119,7 @@ const updateBlog = async (req, res, next) => {
     const error = validationResult(req);
 
     if (!error.isEmpty()) {
-      return errorMessage(res, error.array()[0].msg);
+      return errorMessage(res, error.array()[0].msg, 422);
     }
 
     const { id } = req.params;
