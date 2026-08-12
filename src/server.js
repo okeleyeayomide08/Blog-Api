@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { successMessage } from "./utils/apiResponse.js";
 import { connectDB } from "./config/database.js";
 import blogRoute from "./routes/blogRoutes.js";
@@ -8,6 +9,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 app.use("/blogs", blogRoute);
 
